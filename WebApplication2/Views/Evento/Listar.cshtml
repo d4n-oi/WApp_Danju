@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WebApplication2.Models.Evento>
+
+@{
+    ViewBag.Title = "Listar";
+}
+
+<h2>Listar</h2>
+
+@Html.ActionLink("Cadastrar novo Evento", "Create", null, new { @class = "btn btn-outline-info" })
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Local)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Local)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Editar", new { id = Model.ToList<WebApplication2.Models.Evento>().IndexOf(item) }, new { @class = "btn btn-outline-info" }) |
+                @Html.ActionLink("Exibir Detalhes", "Exibir", new { id = Model.ToList<WebApplication2.Models.Evento>().IndexOf(item) }, new { @class = "btn btn-outline-info" }) |
+                @Html.ActionLink("Excluir", "Delete", new { id = Model.ToList<WebApplication2.Models.Evento>().IndexOf(item) }, new { @class = "btn btn-outline-info" })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WebApplication2.Models.Aluno>
+
+@{
+    ViewBag.Title = "Listar";
+}
+
+<h2>Listar</h2>
+
+    @Html.ActionLink("Cadastrar novo Aluno", "Create", null, new { @class = "btn btn-outline-info"})
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RA)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RA)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Editar", new { id = Model.ToList<WebApplication2.Models.Aluno>().IndexOf(item) }, new { @class = "btn btn-outline-info" }) |
+            @Html.ActionLink("Exibir Detalhes", "Exibir", new { id=Model.ToList<WebApplication2.Models.Aluno>().IndexOf(item)}, new { @class = "btn btn-outline-info" }) |
+            @Html.ActionLink("Excluir", "Delete", new { id = Model.ToList<WebApplication2.Models.Aluno>().IndexOf(item) }, new { @class = "btn btn-outline-info" })
+        </td>
+    </tr>
+}
+
+</table>
