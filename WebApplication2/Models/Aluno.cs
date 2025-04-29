@@ -2,67 +2,64 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication2.Models
 {
     public class Aluno
     {
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "O nome é obrigatório.")]
         public string Nome { get; set; }
-        public string RA { get; set; }
 
-        //publico significa que oura classe pode utilizar esse metodo
+        [Required(ErrorMessage = "O e-mail é obrigatório.")]
+        [EmailAddress(ErrorMessage = "E-mail inválido.")]
+        public string Email { get; set; }
 
+        [Required(ErrorMessage = "A data de nascimento é obrigatória.")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Data de Nascimento")]
+        public DateTime DataNascimento { get; set; }
+
+        
         public static void GerarLista(HttpSessionStateBase session)
         {
-            if (session["ListaAluno"] != null)
+            if (session["ListaAluno"] == null)
             {
-                if(((List<Aluno>)session["ListaAluno"]).Count > 0);
-                {
-                    return;
-                }
-                //tem uma lista, num preisa de ota naum, só tem que dar um jeito de puxar ela
+                session["ListaAluno"] = new List<Aluno>();
             }
-            var lista = new List<Aluno>();
-            lista.Add(new Aluno {Nome = "Dan",RA = "123456"});
-            lista.Add(new Aluno {Nome = "Juh",RA = "654321"});
-            lista.Add(new Aluno {Nome = "Danju",RA = "246810"});
-
-            session.Remove("ListaAluno");
-            session.Add("ListaAluno", lista);
         }
+
         public void Adicionar(HttpSessionStateBase session)
         {
-            if(session ["ListaAluno"] != null)
-            {
-                (session["ListaAluno"] as List<Aluno>).Add(this);
-            }
+            var lista = session["ListaAluno"] as List<Aluno>;
+            this.Id = lista.Count;
+            lista.Add(this);
         }
+
         public static Aluno Procurar(HttpSessionStateBase session, int id)
         {
-            if (session["ListaAluno"] != null)
-            {
-                return (session["ListaAluno"] as List<Aluno>).ElementAt(id);
-            }
-
-            return null;
-        }
-        public void Excluir(HttpSessionStateBase session)
-        {
-            if (session["ListaAluno"] != null)
-            {
-                (session["ListaAluno"] as List<Aluno>).Remove(this);
-            }
+            var lista = session["ListaAluno"] as List<Aluno>;
+            return lista.FirstOrDefault(a => a.Id == id);
         }
 
         public void Editar(HttpSessionStateBase session, int id)
         {
-            if (session["ListaAluno"] != null)
+            var lista = session["ListaAluno"] as List<Aluno>;
+            var original = lista.FirstOrDefault(a => a.Id == id);
+            if (original != null)
             {
-                var aluno = Aluno.Procurar(session, id);
-                aluno.Nome = this.Nome;
-                aluno.RA = this.RA;
+                original.Nome = this.Nome;
+                original.Email = this.Email;
+                original.DataNascimento = this.DataNascimento;
             }
         }
 
+        public void Excluir(HttpSessionStateBase session)
+        {
+            var lista = session["ListaAluno"] as List<Aluno>;
+            lista.RemoveAll(a => a.Id == this.Id);
+        }
     }
 }

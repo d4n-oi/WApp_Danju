@@ -3,6 +3,9 @@
     margin-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
+    width: stretch;
+    height: stretch;
+    border-radius: 10px;
 }
 
 .body {

@@ -1,19 +1,20 @@
 ﻿@model WebApplication2.Models.Aluno
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Cadastrar Aluno";
 }
 
-<h2>Create</h2>
+<h2>Cadastrar Aluno</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Aluno</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
             @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -23,18 +24,30 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RA, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RA, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RA, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataNascimento, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.DataNascimento, new { @class = "form-control", type = "date" })
+                @Html.ValidationMessageFor(model => model.DataNascimento, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-outline-success" />|
+                <input type="submit" value="Salvar" class="btn btn-outline-success" />
                 @Html.ActionLink("Voltar", "Listar", null, new { @class = "btn btn-outline-info" })
             </div>
         </div>
     </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

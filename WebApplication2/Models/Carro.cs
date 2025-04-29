@@ -16,7 +16,7 @@ namespace WebApplication2.Models
         {
             if (session["ListaCarro"] != null)
             {
-                if (((List<Carro>)session["ListaCarro"]).Count > 0) ;
+                if (((List<Carro>)session["ListaCarro"]).Count > 0) 
                 {
                     return;
                 }
